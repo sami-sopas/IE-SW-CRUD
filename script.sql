@@ -1,0 +1,28 @@
+
+USE master;
+GO
+
+DROP DATABASE IF EXISTS DBMovies;
+GO
+
+CREATE DATABASE DBMovies;
+
+use DBMovies;
+
+CREATE TABLE Director(
+	PKDirector INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	Name VARCHAR(100),
+	Age INT,
+	Active BIT
+);
+
+CREATE TABLE Movies(
+	PKMovies INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	Name VARCHAR(100),
+	Gender VARCHAR(100),
+	Duration TIME,
+	FKDirector INT REFERENCES Director(PKDirector)
+);
+
+
+
