@@ -1,10 +1,3 @@
-
-USE master;
-GO
-
-DROP DATABASE IF EXISTS DBMovies;
-GO
-
 CREATE DATABASE DBMovies;
 
 use DBMovies;
