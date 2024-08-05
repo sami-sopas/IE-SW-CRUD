@@ -2,6 +2,9 @@
 using Backend.Models;
 using Microsoft.EntityFrameworkCore;
 
+using Backend.Services.Contract;
+using Backend.Services.Implementation;
+
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -13,6 +16,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DbmoviesContext>(options => {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+//Implementar servicios
+builder.Services.AddScoped<IDirectorService, DirectorService>();
+builder.Services.AddScoped<IMovieService, MovieService>();
 
 var app = builder.Build();
 
