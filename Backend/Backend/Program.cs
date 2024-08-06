@@ -5,6 +5,12 @@ using Microsoft.EntityFrameworkCore;
 using Backend.Services.Contract;
 using Backend.Services.Implementation;
 
+//Referencia automapper
+using AutoMapper;
+using Backend.DTOs;
+using Microsoft.Extensions.DependencyInjection;
+using Backend.Utilities;
+
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -20,6 +26,16 @@ builder.Services.AddDbContext<DbmoviesContext>(options => {
 //Implementar servicios
 builder.Services.AddScoped<IDirectorService, DirectorService>();
 builder.Services.AddScoped<IMovieService, MovieService>();
+
+//builder.Services.AddAutoMapper(cfg => cfg.AddProfile<AutoMapperProfile>());
+// Configurar AutoMapper
+var mapperConfig = new MapperConfiguration(mc =>
+{
+    mc.AddProfile(new AutoMapperProfile());
+});
+
+IMapper mapper = mapperConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
 
 var app = builder.Build();
 
