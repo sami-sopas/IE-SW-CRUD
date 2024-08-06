@@ -27,15 +27,7 @@ builder.Services.AddDbContext<DbmoviesContext>(options => {
 builder.Services.AddScoped<IDirectorService, DirectorService>();
 builder.Services.AddScoped<IMovieService, MovieService>();
 
-//builder.Services.AddAutoMapper(cfg => cfg.AddProfile<AutoMapperProfile>());
-// Configurar AutoMapper
-var mapperConfig = new MapperConfiguration(mc =>
-{
-    mc.AddProfile(new AutoMapperProfile());
-});
-
-IMapper mapper = mapperConfig.CreateMapper();
-builder.Services.AddSingleton(mapper);
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 var app = builder.Build();
 
