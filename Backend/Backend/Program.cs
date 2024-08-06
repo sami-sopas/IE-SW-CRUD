@@ -38,29 +38,71 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-var summaries = new[]
+#region API REST PETICIONES
+app.MapGet("/directors", async (
+    IDirectorService _directorService,
+    IMapper _mapper
+    ) =>
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+    List<Director> directors = await _directorService.GetList();
+    List<DirectorDTO> directorsDTO = _mapper.Map<List<DirectorDTO>>(directors);
 
-app.MapGet("/weatherforecast", () =>
+    if(directorsDTO.Count > 0)
+    {
+        return Results.Ok(directorsDTO);
+    }
+    else
+    {
+        return Results.NotFound();
+    }
+
+});
+
+app.MapGet("/movies", async (
+    IMovieService _movieService,
+    IMapper _mapper
+    ) =>
 {
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
+    List<Movie> movies = await _movieService.GetList();
+    List<MovieDTO> moviesDTO = _mapper.Map<List<MovieDTO>>(movies);
+
+    if (moviesDTO.Count > 0)
+    {
+        return Results.Ok(moviesDTO);
+    }
+    else
+    {
+        return Results.NotFound();
+    }
+
+});
+
+
+app.MapPost("/movie/create", async (
+    MovieDTO model, //Recibir el modelo a crear
+    IMovieService _movieService, //Valores ya inyectados por dependencia
+    IMapper _mapper
+    ) => { 
+
+        var movie = _mapper.Map<Movie>(model); //Convertir el DTO a Model con ayuda del Mapper
+
+        var createdMovie = await _movieService.Add(movie); //Crear el registro en la base de datos
+
+        if(createdMovie != null)
+        {
+            //Regresamos siempre el DTO, no el Modelo
+            return Results.Ok(_mapper.Map<MovieDTO>(createdMovie));
+        }
+        else
+        {
+            return Results.StatusCode(StatusCodes.Status500InternalServerError);
+        }
+});
+
+
+
+app.MapPut("/movie/create", async () => { });
+app.MapDelete("/movie/create", async () => { });
+#endregion
 
 app.Run();
-
-internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
