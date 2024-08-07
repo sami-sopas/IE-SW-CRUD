@@ -101,8 +101,64 @@ app.MapPost("/movie/create", async (
 
 
 
-app.MapPut("/movie/create", async () => { });
-app.MapDelete("/movie/create", async () => { });
+app.MapPut("/movie/update/{idMovie}", async (
+    int idMovie, //Recibir el id del modelo a actualizar
+    MovieDTO model, //Recibir el modelo a actualizar
+    IMovieService _movieService, //Valores ya inyectados por dependencia
+    IMapper _mapper
+    ) => {
+        
+        var movie = await _movieService.Get(idMovie); //Model
+
+        if(movie == null)
+        {
+            return Results.NotFound();
+        }
+
+        var updatedMovie = _mapper.Map<Movie>(model); //DTO parameter to Model
+
+        movie.Name = updatedMovie.Name;
+        movie.Gender = updatedMovie.Gender;
+        movie.Duration = updatedMovie.Duration;
+        movie.Fkdirector = updatedMovie.Fkdirector;
+
+        var response = await _movieService.Update(movie);
+
+        if (response)
+        {
+            return Results.Ok(_mapper.Map<MovieDTO>(movie));
+        }
+        else
+        {
+            return Results.StatusCode(StatusCodes.Status500InternalServerError);
+        }
+
+
+    });
+app.MapDelete("/movie/delete/{idMovie}", async (
+    int idMovie,
+    IMovieService _movieService
+    ) => {
+
+        var movie = await _movieService.Get(idMovie); //Return a Model
+
+        if (movie == null)
+        {
+            return Results.NotFound();
+        }
+
+        var response = await _movieService.Delete(movie);
+
+        if(response)
+        {
+            return Results.Ok();
+        }
+        else
+        {
+            return Results.StatusCode(StatusCodes.Status500InternalServerError);
+        }
+
+    });
 #endregion
 
 app.Run();
