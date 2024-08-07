@@ -29,6 +29,17 @@ builder.Services.AddScoped<IMovieService, MovieService>();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
+//Configuracion de CORS (Para evitar conflictos entre url api y url angular
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("MyPolicy", app =>
+    {
+        app.AllowAnyOrigin();
+        app.AllowAnyHeader();
+        app.AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -160,5 +171,7 @@ app.MapDelete("/movie/delete/{idMovie}", async (
 
     });
 #endregion
+
+app.UseCors("MyPolicy");
 
 app.Run();
