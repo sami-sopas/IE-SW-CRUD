@@ -12,6 +12,7 @@
               <th style="width:25%">Gender</th>
               <th style="width:25%">Duration</th>
               <th style="width:25%">Director Name</th>
+              <th></th>
           </tr>
       </ng-template>
       <ng-template pTemplate="body" let-movie>
@@ -20,6 +21,10 @@
               <td>{{movie.gender}}</td>
               <td>{{movie.duration}}</td>
               <td>{{movie.directorName}}</td>
+              <td>
+                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editMovie(movie)"></button>
+                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteMovie(movie)"></button>
+            </td>
           </tr>
       </ng-template>
       <ng-template pTemplate="paginatorleft">
