@@ -1,0 +1,34 @@
+<p-dialog [(visible)]="display" [modal]="true">
+  <ng-template pTemplate="header">
+    <h3>{{ action }} Movie</h3>
+  </ng-template>
+  <div>
+    <form [formGroup]="formMovie">
+
+      <span class="p-float-label">
+        <input id="float-input" type="text" pInputText formControlName="name">
+        <label for="float-input">Name</label>
+      </span>
+
+      <span class="p-float-label">
+        <input id="float-input" type="text" pInputText formControlName="gender">
+        <label for="float-input">Gender</label>
+      </span>
+
+      <span class="p-float-label">
+        <input id="duration-input" type="text" pInputText formControlName="duration" (input)="formatDuration($event)">
+        <label for="duration-input">Duration (HH:mm)</label>
+      </span>
+
+      <span class="p-float-label">
+        <p-dropdown [options]="directorsList" optionLabel="name" optionValue="pkdirector" formControlName="fkdirector"></p-dropdown>
+        <label for="fkdirector">Director</label>
+      </span>
+
+    </form>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <button type="button" (click)="addEditMovie()" [disabled]="formMovie.invalid">{{ buttonAction }}</button>
+  </ng-template>
+</p-dialog>s
