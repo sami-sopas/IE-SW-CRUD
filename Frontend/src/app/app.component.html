@@ -6,6 +6,8 @@
   (refresh)="onRefresh()">
 </app-modal-add-edit>
 
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
 
 <button type="button" (click)="showDialog()" icon="pi pi-info-circle" label="Show">Open Modal</button>
 
@@ -30,7 +32,7 @@
               <td>{{movie.directorName}}</td>
               <td>
                 <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="showEditDialog(movie)"></button>
-                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteMovie(movie)"></button>
+                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="confirm(movie)"></button>
             </td>
           </tr>
       </ng-template>

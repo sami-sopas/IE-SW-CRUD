@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Movie } from './Interfaces/movie';
 import { MovieService } from './Services/movie.service';
 import { ModalAddEditComponent } from 'src/app/Modals/modal-add-edit/modal-add-edit.component';
+import {ConfirmationService} from 'primeng/api';
 
 @Component({
   selector: 'app-root',
@@ -11,12 +12,30 @@ import { ModalAddEditComponent } from 'src/app/Modals/modal-add-edit/modal-add-e
 export class AppComponent implements OnInit {
   display: boolean = false;
   movies: Movie[] = [];
+
   @ViewChild(ModalAddEditComponent) modalAddEditComponent!: ModalAddEditComponent;
 
-  constructor(private movieService: MovieService) {}
+  constructor(private movieService: MovieService, private confirmationService: ConfirmationService) {}
 
   first = 0;
   rows = 10;
+
+  confirm(movie: Movie) {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to delete this movie?',
+      accept: () => {
+        this.movieService.delete(movie.pkmovies).subscribe({
+          next: () => {
+            console.log('Movie deleted successfully');
+            this.onRefresh();
+          },
+          error: (error) => {
+            console.error('Error deleting movie', error);
+          }
+        });
+      }
+    });
+  }
 
   showDialog() {
     this.modalAddEditComponent.setMovie(null);
@@ -62,21 +81,4 @@ export class AppComponent implements OnInit {
     return this.movies ? this.first === 0 : true;
   }
 
-  editMovie(movie: Movie) {
-    // this.product = {...product};
-    // this.productDialog = true;
-  }
-
-  deleteMovie(movie: Movie) {
-    // this.confirmationService.confirm({
-    //     message: 'Are you sure you want to delete ' + product.name + '?',
-    //     header: 'Confirm',
-    //     icon: 'pi pi-exclamation-triangle',
-    //     accept: () => {
-    //         this.products = this.products.filter(val => val.id !== product.id);
-    //         this.product = {};
-    //         this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Deleted', life: 3000});
-    //     }
-    // });
-  }
 }
