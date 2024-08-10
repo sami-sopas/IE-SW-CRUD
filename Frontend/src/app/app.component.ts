@@ -3,29 +3,30 @@ import { Movie } from './Interfaces/movie';
 import { MovieService } from './Services/movie.service';
 import { ModalAddEditComponent } from 'src/app/Modals/modal-add-edit/modal-add-edit.component';
 
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-
 })
 export class AppComponent implements OnInit {
-
   display: boolean = false;
-
   movies: Movie[] = [];
   @ViewChild(ModalAddEditComponent) modalAddEditComponent!: ModalAddEditComponent;
 
-  constructor(private movieService: MovieService) { }
+  constructor(private movieService: MovieService) {}
 
   first = 0;
   rows = 10;
 
-
   showDialog() {
+    this.modalAddEditComponent.setMovie(null);
     this.display = true;
-}
+  }
+
+  showEditDialog(movie: Movie) {
+    this.modalAddEditComponent.setMovie(movie);
+    this.display = true;
+  }
 
   ngOnInit(): void {
     this.loadMovies();
@@ -64,9 +65,9 @@ export class AppComponent implements OnInit {
   editMovie(movie: Movie) {
     // this.product = {...product};
     // this.productDialog = true;
-}
+  }
 
-deleteMovie(movie: Movie) {
+  deleteMovie(movie: Movie) {
     // this.confirmationService.confirm({
     //     message: 'Are you sure you want to delete ' + product.name + '?',
     //     header: 'Confirm',
@@ -77,5 +78,5 @@ deleteMovie(movie: Movie) {
     //         this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Deleted', life: 3000});
     //     }
     // });
-}
+  }
 }

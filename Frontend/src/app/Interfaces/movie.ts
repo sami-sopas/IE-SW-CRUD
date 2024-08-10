@@ -1,5 +1,5 @@
 export interface Movie {
-  pkMovie: number,
+  pkmovies: number,
   name: string,
   gender: string,
   duration: string,

@@ -2,9 +2,10 @@
   <h1>Lista de peliculas</h1>
 
   <app-modal-add-edit
-    [display]="display"
-    (refresh)="onRefresh()">
-  </app-modal-add-edit>
+  [(display)]="display"
+  (refresh)="onRefresh()">
+</app-modal-add-edit>
+
 
 <button type="button" (click)="showDialog()" icon="pi pi-info-circle" label="Show">Open Modal</button>
 
@@ -28,16 +29,10 @@
               <td>{{movie.duration}}</td>
               <td>{{movie.directorName}}</td>
               <td>
-                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editMovie(movie)"></button>
+                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="showEditDialog(movie)"></button>
                 <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteMovie(movie)"></button>
             </td>
           </tr>
-      </ng-template>
-      <ng-template pTemplate="paginatorleft">
-          <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
-      </ng-template>
-      <ng-template pTemplate="paginatorright">
-          <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
       </ng-template>
   </p-table>
 </div>

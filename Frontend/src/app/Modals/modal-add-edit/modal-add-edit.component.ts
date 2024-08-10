@@ -12,6 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class ModalAddEditComponent implements OnInit {
   @Input() display: boolean = false;
+  @Output() displayChange = new EventEmitter<boolean>();
   @Output() refresh = new EventEmitter<void>();
 
   formMovie: FormGroup;
@@ -19,6 +20,7 @@ export class ModalAddEditComponent implements OnInit {
   buttonAction: string = 'Save';
   directorsList: Director[] = [];
   selectedDirector: string = '';
+  movie: Movie | null = null;
 
   // Inyectar referencias en el constructor
   constructor(
@@ -46,35 +48,65 @@ export class ModalAddEditComponent implements OnInit {
 
   hideDialog(): void {
     this.display = false;
+    this.displayChange.emit(this.display);
+    this.formMovie.reset();
+    this.movie = null;
   }
 
   addEditMovie() {
-    // console.log(this.formMovie);
-    // console.log(this.formMovie.value);
+    if (this.movie) {
+      // Editar película existente
+      const updatedMovie: Movie = {
+        ...this.movie,
+        ...this.formMovie.value
+      };
 
-    const model : Movie = {
-      pkMovie: 0,
-      name: this.formMovie.value.name,
-      gender: this.formMovie.value.gender,
-      duration: this.formMovie.value.duration,
-      fkDirector: this.formMovie.value.fkdirector,
-      directorName: ''
+      console.log(updatedMovie);
+
+      this._movieService.update(updatedMovie.pkmovies,updatedMovie).subscribe({
+        next: (data) => {
+          console.log("Updated movie!");
+          this.display = false;
+          this.refresh.emit();
+        },
+        error: (error) => {
+          console.log("Error updating movie");
+          console.log(error);
+        }
+      });
+    } else {
+      // Agregar nueva película
+      const newMovie: Movie = {
+        ...this.formMovie.value
+      };
+
+      this._movieService.add(newMovie).subscribe({
+        next: (data) => {
+          console.log("Created movie!");
+          this.display = false;
+          this.refresh.emit();
+        },
+        error: (error) => {
+          console.log("Error creating movie");
+          console.log(error);
+        }
+      });
     }
-
-    this._movieService.add(model).subscribe({
-      next: (data) => {
-        console.log("Created movie !");
-        this.display = false;
-        this.refresh.emit();
-
-      },
-      error: (error) => {
-        console.log("Error creating movie");
-        console.log(error);
-      }
-    })
-
   }
+
+  setMovie(movie: Movie | null): void {
+    this.movie = movie;
+    if (movie) {
+      this.formMovie.patchValue(movie);
+      this.action = 'edit';
+      this.buttonAction = 'Update';
+    } else {
+      this.formMovie.reset();
+      this.action = 'new';
+      this.buttonAction = 'Save';
+    }
+  }
+
 
   saveMovie(): void {
 
