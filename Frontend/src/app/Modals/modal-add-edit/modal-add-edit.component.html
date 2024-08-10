@@ -1,4 +1,4 @@
-<p-dialog [(visible)]="display" [modal]="true">
+<p-dialog [(visible)]="display" [modal]="true"  [style]="{height: '50vw'}">
   <ng-template pTemplate="header">
     <h3>{{ action }} Movie</h3>
   </ng-template>
@@ -31,4 +31,4 @@
   <ng-template pTemplate="footer">
     <button type="button" (click)="addEditMovie()" [disabled]="formMovie.invalid">{{ buttonAction }}</button>
   </ng-template>
-</p-dialog>s
+</p-dialog>

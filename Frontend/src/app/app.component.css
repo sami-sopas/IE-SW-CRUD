@@ -1,0 +1,18 @@
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+}
+
+.navbar a {
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: gray;
+  font-size: x-large;
+  font-weight: bold;
+}
+
+.navbar a.active {
+  color: rgb(152, 171, 220);
+}

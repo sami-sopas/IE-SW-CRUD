@@ -1,43 +1,8 @@
-<div style="width: 70%; margin: 40px auto;">
-  <h1>Lista de peliculas</h1>
+<div style="width: 100%; margin: 0 auto;">
+  <nav class="navbar">
+    <a routerLink="/" [ngClass]="{'active': router.url === '/'}">Movies</a>
+    <a routerLink="/directors" [ngClass]="{'active': router.url === '/directors'}">Directors</a>
+  </nav>
 
-  <app-modal-add-edit
-  [(display)]="display"
-  (refresh)="onRefresh()">
-</app-modal-add-edit>
-
-<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
-
-
-<button type="button" (click)="showDialog()" icon="pi pi-info-circle" label="Show">Open Modal</button>
-
-<div class="card">
-  <h5>Implicit Pagination</h5>
-  <p-table [value]="movies" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" [tableStyle]="{'min-width': '50rem'}"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
-      <ng-template pTemplate="header">
-          <tr>
-              <th style="width:25%">Name</th>
-              <th style="width:25%">Gender</th>
-              <th style="width:25%">Duration</th>
-              <th style="width:25%">Director Name</th>
-              <th></th>
-          </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-movie>
-          <tr>
-              <td>{{movie.name}}</td>
-              <td>{{movie.gender}}</td>
-              <td>{{movie.duration}}</td>
-              <td>{{movie.directorName}}</td>
-              <td>
-                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="showEditDialog(movie)"></button>
-                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="confirm(movie)"></button>
-            </td>
-          </tr>
-      </ng-template>
-  </p-table>
+  <router-outlet></router-outlet>
 </div>
-
-</div>
-

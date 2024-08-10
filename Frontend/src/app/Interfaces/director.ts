@@ -1,5 +1,5 @@
 export interface Director {
-  pKDirector: number,
+  pkdirector: number,
   name: string,
   age: number,
   active: boolean,

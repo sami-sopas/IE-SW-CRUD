@@ -15,11 +15,21 @@ import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
+import { RouterModule, Routes } from '@angular/router';
+import { DirectorsComponent } from './directors/directors.component';
+import { MoviesComponent } from './movies/movies.component';
+
+const routes : Routes = [
+  { path: '', component: MoviesComponent }, // Ruta para el componente principal
+  { path: 'directors', component: DirectorsComponent  } // Ruta para el componente de directores
+];
 
 @NgModule({
   declarations: [
     AppComponent,
     ModalAddEditComponent,
+    DirectorsComponent,
+    MoviesComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,8 +43,11 @@ import { ConfirmationService } from 'primeng/api';
     DropdownModule,
     CalendarModule,
     ConfirmDialogModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule,
+    RouterModule.forRoot(routes),
   ],
+  exports: [RouterModule],
   providers: [
     ConfirmationService,
   ],
