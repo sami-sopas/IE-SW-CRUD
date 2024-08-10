@@ -89,7 +89,7 @@ app.MapGet("/movies", async (
 });
 
 
-app.MapPost("/movie/create", async (
+app.MapPost("/movies/create", async (
     MovieDTO model, //Recibir el modelo a crear
     IMovieService _movieService, //Valores ya inyectados por dependencia
     IMapper _mapper
@@ -112,7 +112,7 @@ app.MapPost("/movie/create", async (
 
 
 
-app.MapPut("/movie/update/{idMovie}", async (
+app.MapPut("/movies/update/{idMovie}", async (
     int idMovie, //Recibir el id del modelo a actualizar
     MovieDTO model, //Recibir el modelo a actualizar
     IMovieService _movieService, //Valores ya inyectados por dependencia
@@ -146,7 +146,7 @@ app.MapPut("/movie/update/{idMovie}", async (
 
 
     });
-app.MapDelete("/movie/delete/{idMovie}", async (
+app.MapDelete("/movies/delete/{idMovie}", async (
     int idMovie,
     IMovieService _movieService
     ) => {

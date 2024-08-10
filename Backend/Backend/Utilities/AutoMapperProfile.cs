@@ -25,7 +25,7 @@ namespace Backend.Utilities
                 opt => opt.MapFrom(movie => movie.Duration.Value.ToString("hh\\:mm", CultureInfo.InvariantCulture))
                );
 
-            //De DTO a Model
+            // De DTO a Model
             CreateMap<MovieDTO, Movie>()
                 .ForMember(movie =>
                 movie.FkdirectorNavigation,
@@ -33,7 +33,11 @@ namespace Backend.Utilities
                )
                 .ForMember(movie =>
                 movie.Duration,
-                opt => opt.MapFrom(movieDTO => TimeSpan.ParseExact(movieDTO.Duration, "hh\\:mm", CultureInfo.InvariantCulture))
+                opt => opt.MapFrom(movieDTO =>
+                    !string.IsNullOrEmpty(movieDTO.Duration)
+                    ? TimeOnly.ParseExact(movieDTO.Duration, "HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None)
+                    : (TimeOnly?)null
+                )
                );
             #endregion
         }
