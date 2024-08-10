@@ -69,6 +69,47 @@ app.MapGet("/directors", async (
 
 });
 
+app.MapGet("/director/{idDirector}", async (
+    int idDirector,
+    IDirectorService _directorService,
+    IMapper _mapper
+    ) =>
+{
+    var director = await _directorService.Get(idDirector); //Model
+
+    if (director == null)
+    {
+        return Results.NotFound();
+    }
+
+    var directorDTO = _mapper.Map<DirectorDTO>(director); //Model to DTO
+
+    return Results.Ok(directorDTO);
+});
+
+app.MapPost("/director/create", async (
+    DirectorDTO model,
+    IDirectorService _directorService, //Valores ya inyectados por dependencia
+    IMapper _mapper
+    ) => {
+
+        var director = _mapper.Map<Director>(model); //Convertir el DTO a Model con ayuda del Mapper
+
+        var createdDirector = await _directorService.Add(director); //Crear el registro en BD
+
+        if (createdDirector != null)
+        {
+            //RegresarDTO, no model
+            return Results.Ok(_mapper.Map<MovieDTO>(createdDirector));
+        }
+        else
+        {
+            return Results.StatusCode(StatusCodes.Status500InternalServerError);
+        }
+    });
+
+
+
 app.MapGet("/movies", async (
     IMovieService _movieService,
     IMapper _mapper
@@ -111,6 +152,65 @@ app.MapPost("/movies/create", async (
 });
 
 
+app.MapPut("/director/update/{idDirector}", async (
+    int idDirector, //Recibir el id del director a actualizar
+    DirectorDTO directorToUpdate, //Recibir el director a actualizar
+    IDirectorService directorService, //Valores ya inyectados por dependencia
+    IMapper mapper
+    ) =>
+{
+
+    var currentDirector = await directorService.Get(idDirector); //Modelo actual
+
+    if (currentDirector == null)
+    {
+        return Results.NotFound();
+    }
+
+    var updatedDirector = mapper.Map<Director>(directorToUpdate); //Convertir DTO a Modelo
+
+    currentDirector.Name = updatedDirector.Name;
+    currentDirector.Age = updatedDirector.Age;
+    currentDirector.Active = updatedDirector.Active;
+
+    var response = await directorService.Update(currentDirector);
+
+    if (response)
+    {
+        return Results.Ok(mapper.Map<MovieDTO>(currentDirector));
+    }
+    else
+    {
+        return Results.StatusCode(StatusCodes.Status500InternalServerError);
+    }
+});
+
+app.MapDelete("/director/delete/{idDirector}", async (
+    int idDirector,
+    IDirectorService _directorService
+    ) => {
+
+        var director = await _directorService.Get(idDirector); //Return a Model
+
+        if (director == null)
+        {
+            return Results.NotFound();
+        }
+
+        var response = await _directorService.Delete(director);
+
+        if (response)
+        {
+            return Results.Ok();
+        }
+        else
+        {
+            return Results.StatusCode(StatusCodes.Status500InternalServerError);
+        }
+
+    });
+
+
 
 app.MapPut("/movies/update/{idMovie}", async (
     int idMovie, //Recibir el id del modelo a actualizar
@@ -146,6 +246,7 @@ app.MapPut("/movies/update/{idMovie}", async (
 
 
     });
+
 app.MapDelete("/movies/delete/{idMovie}", async (
     int idMovie,
     IMovieService _movieService
@@ -170,6 +271,7 @@ app.MapDelete("/movies/delete/{idMovie}", async (
         }
 
     });
+
 #endregion
 
 app.UseCors("MyPolicy");

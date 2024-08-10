@@ -13,7 +13,6 @@ namespace Backend.Services.Implementation
         {
             _dbcontext = dbcontext;
         }
-
         public async Task<List<Director>> GetList()
         {
             try
@@ -24,10 +23,76 @@ namespace Backend.Services.Implementation
 
                 return list;
             }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public async Task<Director> Get(int idDirector)
+        {
+            try
+            {
+                Director? director = new Director();
+
+                director = await _dbcontext.Directors.
+                    Where(id => id.Pkdirector == idDirector).FirstOrDefaultAsync();
+
+                return director;
+            }
             catch(Exception ex)
             {
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task<Director> Add(Director model)
+        {
+            try
+            {
+                _dbcontext.Directors.Add(model);
+
+                await _dbcontext.SaveChangesAsync();
+
+                return model;
+
+            }
+            catch(Exception ex)
+            {
+               throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<bool> Update(Director model)
+        {
+            try
+            {
+                _dbcontext.Directors.Update(model);
+
+                await _dbcontext.SaveChangesAsync();
+
+                return true;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<bool> Delete(Director model)
+        {
+            try
+            {
+                _dbcontext.Directors.Remove(model);
+
+                await _dbcontext.SaveChangesAsync();
+
+                return true;
+            }
+            catch(Exception ex)
+            {
+               throw new Exception(ex.Message);
+            }
+        }
+
     }
 }
