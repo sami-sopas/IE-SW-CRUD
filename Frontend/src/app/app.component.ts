@@ -39,12 +39,19 @@ export class AppComponent implements OnInit {
 
   showDialog() {
     this.modalAddEditComponent.setMovie(null);
-    this.display = true;
+    this.display = false;
+    setTimeout(() => {
+      this.display = true;
+      console.log(this.display);
+    }, 0);
   }
 
   showEditDialog(movie: Movie) {
     this.modalAddEditComponent.setMovie(movie);
-    this.display = true;
+    this.display = false;
+    setTimeout(() => {
+      this.display = true;
+    }, 0);
   }
 
   ngOnInit(): void {
