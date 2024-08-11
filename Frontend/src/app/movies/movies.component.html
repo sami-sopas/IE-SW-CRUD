@@ -1,6 +1,6 @@
 <div style="width: 70%; margin: 40px auto;">
 
-  <h1>Lista de peliculas</h1>
+  <h1>Movies</h1>
 
   <app-modal-add-edit
     [(display)]="display"
@@ -9,11 +9,9 @@
 
   <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
 
-
-  <button type="button" (click)="showDialog()" icon="pi pi-info-circle" label="Show">Open Modal</button>
+  <button pButton pRipple (click)="showDialog()" type="button" label="Add movie" class="p-button-rounded p-button-success"></button>
 
   <div class="card">
-    <h5>Implicit Pagination</h5>
     <p-table [value]="movies" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
       [tableStyle]="{'min-width': '50rem'}"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
@@ -23,6 +21,7 @@
           <th style="width:25%">Gender</th>
           <th style="width:25%">Duration</th>
           <th style="width:25%">Director Name</th>
+          <th></th>
           <th></th>
         </tr>
       </ng-template>
@@ -35,8 +34,10 @@
           <td>
             <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
               (click)="showEditDialog(movie)"></button>
+          </td>
+          <td>
             <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
-              (click)="confirm(movie)"></button>
+            (click)="confirm(movie)"></button>
           </td>
         </tr>
       </ng-template>

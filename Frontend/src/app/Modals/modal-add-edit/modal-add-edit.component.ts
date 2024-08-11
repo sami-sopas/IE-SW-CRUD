@@ -107,29 +107,23 @@ export class ModalAddEditComponent implements OnInit {
     }
   }
 
-
-  saveMovie(): void {
-
-    // if (this.formMovie.valid) {
-    //   const movie: Movie = this.formMovie.value;
-    //   if (this.action === 'new') {
-    //     this._movieService.addMovie(movie).subscribe(() => {
-    //       this.hideDialog();
-    //     });
-    //   } else {
-    //     this._movieService.updateMovie(movie).subscribe(() => {
-    //       this.hideDialog();
-    //     });
-    //   }
-    // }
-  }
-
   formatDuration(event: any): void {
-    const input = event.target.value.replace(/[^0-9]/g, '');
-    if (input.length >= 3) {
-      event.target.value = input.slice(0, 2) + ':' + input.slice(2, 4);
-    } else if (input.length >= 1) {
-      event.target.value = input.slice(0, 2);
-    }
+      const input = event.target.value.replace(/[^0-9]/g, '');
+      if (input.length >= 3) {
+          let minutes = parseInt(input.slice(0, 2), 10);
+          let seconds = parseInt(input.slice(2, 4), 10);
+          if (minutes > 12 || (minutes === 12 && seconds > 59)) {
+              event.target.value = '12:59';
+          } else {
+              event.target.value = input.slice(0, 2) + ':' + input.slice(2, 4);
+          }
+      } else if (input.length >= 1) {
+          let minutes = parseInt(input.slice(0, 2), 10);
+          if (minutes > 12) {
+              event.target.value = '12';
+          } else {
+              event.target.value = input.slice(0, 2);
+          }
+      }
   }
 }

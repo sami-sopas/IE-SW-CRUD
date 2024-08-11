@@ -1,11 +1,13 @@
 <div style="width: 70%; margin: 40px auto;">
-  <h1>Lista de directores</h1>
+  <h1>Directors</h1>
 
   <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
 
-  <a routerLink="/director/create" class="btn btn-primary">Create Director</a>
+  <a pButton pRipple routerLink="/director/create" class="p-button-rounded p-button-success"  style="text-decoration:none">
+    Add Director
+  </a>
+
   <div class="card">
-    <h5>Implicit Pagination</h5>
     <p-table [value]="directors" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
       [tableStyle]="{'min-width': '50rem'}"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
@@ -15,6 +17,7 @@
           <th style="width:25%">Age</th>
           <th style="width:25%">Active</th>
           <th></th>
+          <th></th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-director>
@@ -23,8 +26,10 @@
           <td>{{director.age}}</td>
           <td>{{director.active}}</td>
           <td>
-            <a [routerLink]="['/director/edit', director.pkdirector]" class="btn btn-success">Editar</a>
-            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+            <a [routerLink]="['/director/edit', director.pkdirector]" pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-warning"  style="text-decoration:none"></a>
+          </td>
+          <td>
+            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"
             (click)="deleteMovie(director.pkdirector)"></button>
           </td>
         </tr>

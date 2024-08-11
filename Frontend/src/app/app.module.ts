@@ -19,6 +19,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DirectorsComponent } from './directors/directors.component';
 import { MoviesComponent } from './movies/movies.component';
 import { DirectorFormComponent } from './directors/director-form/director-form.component';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 const routes : Routes = [
   { path: '', component: MoviesComponent },
@@ -49,6 +50,7 @@ const routes : Routes = [
     ConfirmDialogModule,
     HttpClientModule,
     AppRoutingModule,
+    InputSwitchModule,
     RouterModule.forRoot(routes),
   ],
   exports: [RouterModule],

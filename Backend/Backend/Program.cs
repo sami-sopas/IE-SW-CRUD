@@ -177,7 +177,7 @@ app.MapPut("/director/update/{idDirector}", async (
 
     if (response)
     {
-        return Results.Ok(mapper.Map<MovieDTO>(currentDirector));
+        return Results.Ok(mapper.Map<DirectorDTO>(currentDirector));
     }
     else
     {
