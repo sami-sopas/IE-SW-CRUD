@@ -1,6 +1,9 @@
 <div style="width: 70%; margin: 40px auto;">
   <h1>Lista de directores</h1>
-  <a routerLink="/director/create" class="btn btn-primary">Crear Director</a>
+
+  <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
+  <a routerLink="/director/create" class="btn btn-primary">Create Director</a>
   <div class="card">
     <h5>Implicit Pagination</h5>
     <p-table [value]="directors" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
@@ -21,6 +24,8 @@
           <td>{{director.active}}</td>
           <td>
             <a [routerLink]="['/director/edit', director.pkdirector]" class="btn btn-success">Editar</a>
+            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+            (click)="deleteMovie(director.pkdirector)"></button>
           </td>
         </tr>
       </ng-template>
