@@ -24,7 +24,7 @@ export class DirectorService {
   }
 
   get(idDirector: number): Observable<Director> {
-    return this.http.get<Director>(`${this.apiUrl}/${idDirector}`);
+    return this.http.get<Director>(`${this.apiUrl}${idDirector}`);
   }
 
   update(idDirector: number, director: Director): Observable<Director> {
