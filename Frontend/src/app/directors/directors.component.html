@@ -1,2 +1,29 @@
-<p>directors works!</p>
- aaaa
+<div style="width: 70%; margin: 40px auto;">
+  <h1>Lista de directores</h1>
+  <a routerLink="/director/create" class="btn btn-primary">Crear Director</a>
+  <div class="card">
+    <h5>Implicit Pagination</h5>
+    <p-table [value]="directors" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+      [tableStyle]="{'min-width': '50rem'}"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width:25%">Name</th>
+          <th style="width:25%">Age</th>
+          <th style="width:25%">Active</th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-director>
+        <tr>
+          <td>{{director.name}}</td>
+          <td>{{director.age}}</td>
+          <td>{{director.active}}</td>
+          <td>
+            <a [routerLink]="['/director/edit', director.id]" class="btn btn-success">Editar</a>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

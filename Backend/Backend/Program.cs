@@ -100,7 +100,7 @@ app.MapPost("/director/create", async (
         if (createdDirector != null)
         {
             //RegresarDTO, no model
-            return Results.Ok(_mapper.Map<MovieDTO>(createdDirector));
+            return Results.Ok(_mapper.Map<DirectorDTO>(createdDirector));
         }
         else
         {

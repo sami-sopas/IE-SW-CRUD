@@ -18,10 +18,13 @@ import { ConfirmationService } from 'primeng/api';
 import { RouterModule, Routes } from '@angular/router';
 import { DirectorsComponent } from './directors/directors.component';
 import { MoviesComponent } from './movies/movies.component';
+import { DirectorFormComponent } from './directors/director-form/director-form.component';
 
 const routes : Routes = [
-  { path: '', component: MoviesComponent }, // Ruta para el componente principal
-  { path: 'directors', component: DirectorsComponent  } // Ruta para el componente de directores
+  { path: '', component: MoviesComponent },
+  { path: 'directors', component: DirectorsComponent  },
+  { path: 'director/create', component: DirectorFormComponent },
+  { path: 'director/edit/:id', component: DirectorFormComponent }
 ];
 
 @NgModule({
@@ -30,6 +33,7 @@ const routes : Routes = [
     ModalAddEditComponent,
     DirectorsComponent,
     MoviesComponent,
+    DirectorFormComponent,
   ],
   imports: [
     BrowserModule,

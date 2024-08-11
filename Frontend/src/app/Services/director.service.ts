@@ -16,7 +16,7 @@ export class DirectorService {
   constructor(private http:HttpClient) { }
 
   getList():Observable<Director[]>{
-    return this.http.get<Director[]>("directors/");
+    return this.http.get<Director[]>(this.endpoint + "directors");
   }
 
   add(director: Director): Observable<Director> {
