@@ -29,7 +29,7 @@ dotnet run --project Backend
 ```
 Nota: En http://localhost:5028/swagger/index.html podras ver los endpoints de la API
 
-1. Instalar dependencias de Angular y ejecutar el proyecto
+4. En una nueva consola dentro del proyecto, instalar dependencias de Angular y ejecutar el proyecto
 
 ```bash
 cd .\Frontend\
